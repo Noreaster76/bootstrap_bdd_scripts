@@ -20,7 +20,7 @@ public class AppTest
     }
     @Nested
     @DisplayName("given foo is false")
-    class FooIsTrueTest {
+    class FooIsFalseTest {
         @Test
         @DisplayName("it returns 'roo'")
         void returnsMoo() {
