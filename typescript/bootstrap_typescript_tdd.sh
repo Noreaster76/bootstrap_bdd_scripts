@@ -13,7 +13,7 @@ mkdir "$1"
 DIR="$(dirname "$(readlink -f "$0")")"
 
 cp $DIR/tsconfig.json $1/
-cp $DIR/.mocharc.json $1/
+cp $DIR/jest.config.js $1/
 
 # Step 2: Change to the newly created directory
 cd "$1" || exit 1
@@ -24,15 +24,12 @@ curl -sL https://www.toptal.com/developers/gitignore/api/macos,vim,node,git >> .
 git add .gitignore
 git commit -m"Add .gitignore"
 
-# Step 4a: Create a directory and file for Javascript tests
+# Step 4a: Create a directory and file for Typescript tests
 mkdir tests
-touch tests/$1_test.ts
 
-# Step 4b: Populate the Javascript test file
-cat > tests/$1_test.ts <<- BOILERPLATE
+# Step 4b: Populate the Typescript test file
+cat > "tests/$1.test.ts" <<- BOILERPLATE
 import $1 from "../src/$1"
-
-var expect = require('chai').expect;
 
 describe('$1())', function() {
     const tests = [
@@ -50,7 +47,7 @@ describe('$1())', function() {
 
         describe(\`when the input is \${args}\`, function () {
             it(\`returns \${expected}\`, function() {
-                expect($1(args)).to.equal(expected);
+                expect($1(args)).toEqual(expected);
             });
         });
 
@@ -58,34 +55,35 @@ describe('$1())', function() {
 });
 BOILERPLATE
 
-# Step 5a: Create a directory and file for Javascript source
+# Step 5a: Create a directory and file for Typescript source
 mkdir src
 touch src/$1.ts
 
-# Step 5b: Populate the Javascript source file
+# Step 5b: Populate the Typescript source file
 cat > src/$1.ts <<- BOILERPLATE
 export default function $1(replace_me_argument: string): string {
     return 'REPLACE ME';
 };
 BOILERPLATE
 
-# Step 5: Add mocha and chai as dependencies using npm
-npm init -y
-npm install chai mocha ts-node cross-env @types/chai @types/mocha --save-dev
-
-# Step 6: Update the npm test script to run Mocha with the test file
+# Step 5: Update the npm test script to run Jest with the test file
 echo "{
   \"scripts\": {
-    \"test\": \"mocha $1.ts\"
+    \"test\": \"jest $1.test.ts\",
+    \"build\": \"tsc\"
   }
 }" > package.json
 
-# Step 6: Start an observer for file changes
+# Step 6: Install the necessary requirements
+npm init -y
+npm install --save-dev typescript @types/node ts-node jest ts-jest @types/jest @jest/globals
+
+# Step 7: Start an observer for file changes
 npm install -g onchange
 
 # Provide user instructions
 echo "Project setup complete! Watching for file changes..."
 
 # Create a script to run npm test on file changes
-onchange "src/$1.ts" "tests/$1_test.ts" -- npm test
+onchange "src/$1.ts" "tests/$1.test.ts" -- npm test
 
