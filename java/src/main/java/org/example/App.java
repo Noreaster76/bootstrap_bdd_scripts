@@ -6,7 +6,7 @@ package org.example;
  */
 public class App 
 {
-    public static String go(int i) {
+    public static String go(String s, String t) {
         return null;
     }
 }
