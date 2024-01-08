@@ -1,12 +1,8 @@
 package org.example;
 
-/**
- * Hello world!
- *
- */
-public class App 
+public class Solution
 {
-    public static String go(String s, String t) {
-        return null;
+    public boolean go(String s, String t) {
+        return false;
     }
 }
