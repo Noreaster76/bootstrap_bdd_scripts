@@ -25,7 +25,11 @@ curl -sL https://www.toptal.com/developers/gitignore/api/macos,vim,java,git,inte
 git add .gitignore
 git commit -m"Add .gitignore"
 
-# Step 4: Open the IDE
+# Step 4: Commit the Maven POM
+git add pom.xml
+git commit -m"Add Maven POM"
+
+# Step 5: Open the IDE
 
 open .
 echo "Script complete. Open your IDE and create a new project from $1/pom.xml."
