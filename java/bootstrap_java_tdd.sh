@@ -31,6 +31,4 @@ git commit -m"Add Maven POM"
 
 # Step 5: Open the IDE
 
-open .
-echo "Script complete. Open your IDE and create a new project from $1/pom.xml."
-
+open pom.xml
