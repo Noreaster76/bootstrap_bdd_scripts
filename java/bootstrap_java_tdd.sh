@@ -21,7 +21,7 @@ cd "$1" || exit 1
 
 # Step 3: Create a new git repository
 git init
-curl -sL https://www.toptal.com/developers/gitignore/api/macos,vim,java,git,intellij >> .gitignore
+cp $DIR/.gitignore .
 git add .gitignore
 git commit -m"Add .gitignore"
 
