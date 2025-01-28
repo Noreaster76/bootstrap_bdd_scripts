@@ -42,6 +42,7 @@ then
     echo "gem 'debug', '>= 1.0.0'" >> Gemfile
     echo "gem 'rspec'" >> Gemfile
     echo "gem 'observr'" >> Gemfile
+    echo "gem 'observer'" >> Gemfile
     bundle
 
     git add Gemfile
